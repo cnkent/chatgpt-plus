@@ -1,5 +1,7 @@
 <template>
-  <div class="fixed top-5 right-20 p-1 border cursor-pointer rounded-full">
+  <div
+    class="fixed top-5 right-20 p-1 border cursor-pointer border-gray-900 dark:border-slate-300 rounded-full text-gray-900 dark:text-slate-300"
+  >
     <svg
       v-if="theme == 'dark'"
       xmlns="http://www.w3.org/2000/svg"
@@ -35,19 +37,22 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { useThemeStore } from '@/stores/theme'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'ThemeToggle',
   setup() {
-    const theme = ref(localStorage.getItem('ZenbotTheme'))
+    const themeStore = useThemeStore()
+    const theme = computed(() => themeStore.theme)
+    themeStore.getTheme()
+
     const setTheme = (t: string) => {
       if (theme.value) {
         document.documentElement.classList.remove(theme.value)
       }
       document.documentElement.classList.add(t)
-      theme.value = t
-      localStorage.setItem('ZenbotTheme', t)
+      themeStore.setTheme(t)
     }
     return {
       theme,
