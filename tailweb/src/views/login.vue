@@ -12,15 +12,12 @@
     </div>
     <div class="dark:shadow-[0_-80px_40px_0_#181818] shadow-[0_-80px_40px_0_white]">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          class="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
+        <LogoIcon class="!w-16 h-16 mx-auto text-gray-900 dark:text-slate-300" />
         <h2
           class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-slate-300"
         >
-          在这里可与ChatGPT、GPT-4、Claude-3-Opus、DALLE 3等数百万机器人交谈。
+          在这里可与ChatGPT、GPT-4、Claude-3-Opus、DALLE 3等数百万机器人交谈，可使用 Midjourney
+          绘出精彩人生。
         </h2>
       </div>
 
@@ -94,12 +91,14 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import ThemeToggle from '@/components/theme-toggle.vue'
+import LogoIcon from '@/components/logo-icon.vue'
 import { useThemeStore } from '@/stores/theme'
 
 export default defineComponent({
   name: 'LoginView',
   components: {
-    ThemeToggle
+    ThemeToggle,
+    LogoIcon
   },
   setup() {
     const themeStore = useThemeStore()
