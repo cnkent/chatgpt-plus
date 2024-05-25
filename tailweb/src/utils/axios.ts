@@ -26,26 +26,42 @@ class HttpRequest {
     this.service.interceptors.response.use(
       (response: AxiosResponse<ResponseModel>): AxiosResponse['data'] => {
         const { data } = response
-        if (data.code != 0 && data.code != HttpCodeConfig.success) {
-          console.log('1231312')
+        if (data.code != 0) {
+          if (data.code === 401) {
+            window.location.href = '/login'
+          } else {
+            notify({
+              group: 'error',
+              title: '请求出错',
+              text: data.data
+            })
+          }
         } else {
           return data
         }
       },
       (error: AxiosError<ResponseModel>) => {
         if (error.response?.status === 401) {
-          window.location.href = '/'
+          window.location.href = '/login'
           return
         }
 
         if (error.response?.data) {
-          console.log('1231312')
+          notify({
+            group: 'error',
+            title: '请求出错',
+            text: error.response.data.data
+          })
         } else {
           if (error.response?.status === 401) {
             window.location.href = '/'
             return
           }
-          console.log('12131231221')
+          notify({
+            group: 'error',
+            title: '请求出错',
+            text: error.response?.statusText
+          })
         }
         return Promise.reject(error)
       }
