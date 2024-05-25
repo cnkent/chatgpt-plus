@@ -22,7 +22,7 @@
       </div>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
+        <form class="space-y-6">
           <div>
             <label
               for="email"
@@ -70,14 +70,13 @@
 
           <div>
             <button
-              type="submit"
+              @click="btnClick"
               class="flex w-full justify-center rounded-md bg-indigo-600 p-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               登录
             </button>
           </div>
         </form>
-
         <p class="mt-10 text-center text-sm text-slate-300">
           还没有账号？{{ ' ' }}
           <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
@@ -93,6 +92,7 @@ import { computed, defineComponent } from 'vue'
 import ThemeToggle from '@/components/theme-toggle.vue'
 import LogoIcon from '@/components/logo-icon.vue'
 import { useThemeStore } from '@/stores/theme'
+import { notify } from 'notiwind'
 
 export default defineComponent({
   name: 'LoginView',
@@ -104,8 +104,21 @@ export default defineComponent({
     const themeStore = useThemeStore()
     const theme = computed(() => themeStore.theme)
     themeStore.getTheme()
+
+    const btnClick = () => {
+      notify(
+        {
+          group: 'error',
+          title: '操作成功',
+          text: '恭喜登录成功'
+        },
+        4000
+      )
+    }
+
     return {
-      theme
+      theme,
+      btnClick
     }
   }
 })
